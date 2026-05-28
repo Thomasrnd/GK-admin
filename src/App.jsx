@@ -3,7 +3,7 @@ import Sidebar    from './components/Sidebar'
 import Dashboard  from './pages/Dashboard'
 import Orders     from './pages/Orders'
 import Products   from './pages/Products'
-import Stock      from './pages/Stock'
+import Games      from './pages/Games'
 import AddProduct from './pages/AddProduct'
 import ImportCSV  from './pages/ImportCSV'
 
@@ -14,7 +14,7 @@ export default function App() {
     dashboard: <Dashboard setPage={setPage} />,
     orders:    <Orders />,
     products:  <Products />,
-    stock:     <Stock />,
+    games:     <Games />,
     add:       <AddProduct />,
     import:    <ImportCSV />,
   }

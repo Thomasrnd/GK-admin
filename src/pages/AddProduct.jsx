@@ -56,7 +56,7 @@ export default function AddProduct() {
             <input value={form.card_code} onChange={e => set('card_code', e.target.value)} placeholder="cth. ST1-001" />
           </Field>
           <Field label="Game *">
-            <select value={form.game_id} onChange={e => set('game_id', e.target.value)} style={form.game_id ? {} : { color: '#a1a1aa' }}>
+            <select value={form.game_id} onChange={e => setForm(f => ({ ...f, game_id: e.target.value, expansion_id: '' }))} style={form.game_id ? {} : { color: '#a1a1aa' }}>
               <option value="">Pilih game</option>
               {games.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
             </select>

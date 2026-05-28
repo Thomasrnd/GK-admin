@@ -1,10 +1,10 @@
 const NAV_ITEMS = [
-  { id: 'dashboard', label: 'Dashboard',     color: '#18181b' },
-  { id: 'orders',    label: 'Orders',        color: '#378ADD' },
-  { id: 'products',  label: 'Produk',        color: '#639922' },
-  { id: 'stock',     label: 'Monitor Stok',  color: '#E24B4A' },
-  { id: 'add',       label: 'Tambah Produk', color: '#BA7517' },
-  { id: 'import',    label: 'Import CSV',    color: '#7F77DD' },
+  { id: 'dashboard', label: 'Dashboard',        color: '#18181b' },
+  { id: 'orders',    label: 'Orders',           color: '#378ADD' },
+  { id: 'products',  label: 'Produk',           color: '#639922' },
+  { id: 'games',     label: 'Game & Expansion', color: '#D4537E' },
+  { id: 'add',       label: 'Tambah Produk',    color: '#BA7517' },
+  { id: 'import',    label: 'Import CSV',       color: '#7F77DD' },
 ]
 
 export default function Sidebar({ page, setPage }) {

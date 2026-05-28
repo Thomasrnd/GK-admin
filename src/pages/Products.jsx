@@ -6,6 +6,7 @@ export default function Products() {
   const [products, setProducts] = useState([])
   const [search, setSearch] = useState('')
   const [filterGame, setFilterGame] = useState('')
+  const [filterExp, setFilterExp] = useState('')
   const [editing, setEditing] = useState(null)
   const [editData, setEditData] = useState({})
   const [saving, setSaving] = useState(false)
@@ -16,11 +17,23 @@ export default function Products() {
     fetch(`${API}/products/all`).then(r => r.json()).then(setProducts).catch(() => {})
   }
 
-  const games = [...new Set(products.map(p => p.game_name))]
+  const games = [...new Set(products.map(p => p.game_name))].sort()
+
+  const expansionsForGame = [...new Set(
+    products
+      .filter(p => !filterGame || p.game_name === filterGame)
+      .map(p => p.expansion_name)
+  )].sort()
+
+  const handleGameChange = (game) => {
+    setFilterGame(game)
+    setFilterExp('') // reset expansion saat game berubah
+  }
 
   const filtered = products.filter(p =>
     (!search || p.name.toLowerCase().includes(search.toLowerCase()) || p.card_code?.toLowerCase().includes(search.toLowerCase())) &&
-    (!filterGame || p.game_name === filterGame)
+    (!filterGame || p.game_name === filterGame) &&
+    (!filterExp || p.expansion_name === filterExp)
   )
 
   const handleEdit = (p) => {
@@ -45,12 +58,34 @@ export default function Products() {
     <div>
       <h1 style={titleStyle}>Daftar Produk</h1>
 
-      <div style={{ display: 'flex', gap: '10px', marginBottom: '14px' }}>
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama / card code..." />
-        <select value={filterGame} onChange={e => setFilterGame(e.target.value)} style={{ width: '180px' }}>
+      {/* Filter bar */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: '14px', flexWrap: 'wrap' }}>
+        <input
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          placeholder="Cari nama / card code..."
+          style={{ flex: 1, minWidth: '180px' }}
+        />
+        <select value={filterGame} onChange={e => handleGameChange(e.target.value)} style={{ width: '160px' }}>
           <option value="">Semua game</option>
           {games.map(g => <option key={g} value={g}>{g}</option>)}
         </select>
+        <select
+          value={filterExp}
+          onChange={e => setFilterExp(e.target.value)}
+          disabled={!filterGame}
+          style={{ width: '180px', opacity: !filterGame ? 0.5 : 1 }}
+        >
+          <option value="">Semua set</option>
+          {expansionsForGame.map(e => <option key={e} value={e}>{e}</option>)}
+        </select>
+      </div>
+
+      {/* Info count */}
+      <div style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '10px' }}>
+        {filtered.length} produk
+        {filterGame && ` · ${filterGame}`}
+        {filterExp && ` · ${filterExp}`}
       </div>
 
       <div style={{ backgroundColor: 'white', border: '1px solid #f0f0f0', borderRadius: '12px', overflow: 'hidden' }}>
@@ -58,7 +93,7 @@ export default function Products() {
           <thead>
             <tr>
               <th>Kartu</th>
-              <th>Game / Set</th>
+              <th>Set</th>
               <th>Harga</th>
               <th>Stok</th>
               <th>Status</th>
@@ -75,8 +110,8 @@ export default function Products() {
                   {p.card_code && <div style={{ fontSize: '11px', color: '#a1a1aa', fontFamily: 'monospace' }}>{p.card_code}</div>}
                 </td>
                 <td style={{ color: '#71717a' }}>
-                  <div>{p.game_name}</div>
-                  <div style={{ fontSize: '11px', color: '#a1a1aa' }}>{p.expansion_name}</div>
+                  {!filterGame && <div style={{ fontSize: '12px' }}>{p.game_name}</div>}
+                  <div style={{ fontSize: filterGame ? '13px' : '11px', color: filterGame ? '#18181b' : '#a1a1aa' }}>{p.expansion_name}</div>
                 </td>
                 <td>
                   {editing === p.id
@@ -125,7 +160,7 @@ function StatusPill({ active }) {
   )
 }
 
-const titleStyle    = { fontSize: '22px', fontWeight: '800', marginBottom: '24px' }
-const editBtnStyle  = { padding: '4px 12px', border: '1px solid #e4e4e7', borderRadius: '6px', backgroundColor: 'white', fontSize: '12px' }
-const saveBtnStyle  = { padding: '4px 10px', backgroundColor: '#18181b', color: 'white', border: 'none', borderRadius: '6px', fontSize: '12px' }
+const titleStyle     = { fontSize: '22px', fontWeight: '800', marginBottom: '24px' }
+const editBtnStyle   = { padding: '4px 12px', border: '1px solid #e4e4e7', borderRadius: '6px', backgroundColor: 'white', fontSize: '12px' }
+const saveBtnStyle   = { padding: '4px 10px', backgroundColor: '#18181b', color: 'white', border: 'none', borderRadius: '6px', fontSize: '12px' }
 const cancelBtnStyle = { padding: '4px 10px', border: '1px solid #e4e4e7', borderRadius: '6px', backgroundColor: 'white', fontSize: '12px' }
