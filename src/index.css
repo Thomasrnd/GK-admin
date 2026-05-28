@@ -1,0 +1,47 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Inter", "Segoe UI", sans-serif;
+  background-color: #fafafc;
+  color: #18181b;
+  -webkit-font-smoothing: antialiased;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  font-size: 13px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  background-color: white;
+  color: #18181b;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #a1a1aa;
+}
+
+button { font-family: inherit; cursor: pointer; }
+
+table { border-collapse: collapse; width: 100%; }
+
+th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a1a1aa;
+  background-color: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+td {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+tr:last-child td { border-bottom: none; }
