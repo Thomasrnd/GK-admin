@@ -1,6 +1,7 @@
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard',        color: '#18181b' },
   { id: 'orders',    label: 'Orders',           color: '#378ADD' },
+  { id: 'sales',     label: 'Rekap Penjualan',  color: '#1D9E75' },
   { id: 'products',  label: 'Produk',           color: '#639922' },
   { id: 'games',     label: 'Game & Expansion', color: '#D4537E' },
   { id: 'add',       label: 'Tambah Produk',    color: '#BA7517' },

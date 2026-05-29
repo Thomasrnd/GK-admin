@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Sidebar    from './components/Sidebar'
 import Dashboard  from './pages/Dashboard'
 import Orders     from './pages/Orders'
+import Sales      from './pages/Sales'
 import Products   from './pages/Products'
 import Games      from './pages/Games'
 import AddProduct from './pages/AddProduct'
@@ -13,6 +14,7 @@ export default function App() {
   const pages = {
     dashboard: <Dashboard setPage={setPage} />,
     orders:    <Orders />,
+    sales:     <Sales />,
     products:  <Products />,
     games:     <Games />,
     add:       <AddProduct />,

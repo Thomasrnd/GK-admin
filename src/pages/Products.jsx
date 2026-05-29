@@ -27,7 +27,7 @@ export default function Products() {
 
   const handleGameChange = (game) => {
     setFilterGame(game)
-    setFilterExp('') // reset expansion saat game berubah
+    setFilterExp('')
   }
 
   const filtered = products.filter(p =>
@@ -38,7 +38,7 @@ export default function Products() {
 
   const handleEdit = (p) => {
     setEditing(p.id)
-    setEditData({ price: p.price, stock: p.stock, is_active: p.is_active })
+    setEditData({ price: p.price, stock: p.stock, is_active: p.is_active, image_url: p.image_url || '' })
   }
 
   const handleSave = async (id) => {
@@ -92,6 +92,7 @@ export default function Products() {
         <table>
           <thead>
             <tr>
+              <th style={{ width: '56px' }}></th>
               <th>Kartu</th>
               <th>Set</th>
               <th>Harga</th>
@@ -102,9 +103,12 @@ export default function Products() {
           </thead>
           <tbody>
             {filtered.length === 0 ? (
-              <tr><td colSpan={6} style={{ padding: '32px', textAlign: 'center', color: '#a1a1aa' }}>Tidak ada produk</td></tr>
+              <tr><td colSpan={7} style={{ padding: '32px', textAlign: 'center', color: '#a1a1aa' }}>Tidak ada produk</td></tr>
             ) : filtered.map(p => (
               <tr key={p.id}>
+                <td>
+                  <Thumb url={p.image_url} name={p.name} />
+                </td>
                 <td>
                   <div style={{ fontWeight: '600' }}>{p.name}</div>
                   {p.card_code && <div style={{ fontSize: '11px', color: '#a1a1aa', fontFamily: 'monospace' }}>{p.card_code}</div>}
@@ -144,7 +148,61 @@ export default function Products() {
           </tbody>
         </table>
       </div>
+
+      {/* Edit gambar — muncul saat editing */}
+      {editing && (
+        <div style={{ marginTop: '16px', backgroundColor: 'white', border: '1px solid #f0f0f0', borderRadius: '12px', padding: '20px', maxWidth: '600px' }}>
+          <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px', color: '#3f3f46' }}>
+            URL Gambar Kartu
+          </div>
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+            <div style={{ flexShrink: 0 }}>
+              <Thumb url={editData.image_url} name="" big />
+            </div>
+            <div style={{ flex: 1 }}>
+              <input
+                value={editData.image_url}
+                onChange={e => setEditData(d => ({ ...d, image_url: e.target.value }))}
+                placeholder="https://..."
+                style={{ width: '100%', marginBottom: '8px' }}
+              />
+              <div style={{ fontSize: '12px', color: '#a1a1aa' }}>
+                Tempel URL gambar kartu. Preview muncul otomatis di sebelah kiri. Kosongkan untuk pakai placeholder.
+              </div>
+              <button onClick={() => handleSave(editing)} disabled={saving} style={{ ...saveBtnStyle, marginTop: '12px', padding: '8px 18px', fontSize: '13px' }}>
+                {saving ? 'Menyimpan...' : 'Simpan perubahan'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  )
+}
+
+function Thumb({ url, name, big }) {
+  const [failed, setFailed] = useState(false)
+  const size = big ? { width: '90px', height: '126px' } : { width: '40px', height: '56px' }
+
+  if (!url || failed) {
+    return (
+      <div style={{
+        ...size, borderRadius: '6px',
+        background: 'linear-gradient(135deg, #e0c3fc, #8ec5fc)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        flexShrink: 0,
+      }}>
+        <span style={{ color: 'white', fontSize: big ? '11px' : '8px', fontWeight: '700' }}>No img</span>
+      </div>
+    )
+  }
+  return (
+    <img
+      src={url}
+      alt={name}
+      onError={() => setFailed(true)}
+      style={{ ...size, borderRadius: '6px', objectFit: 'cover', display: 'block', flexShrink: 0, border: '1px solid #f0f0f0' }}
+    />
   )
 }
 
