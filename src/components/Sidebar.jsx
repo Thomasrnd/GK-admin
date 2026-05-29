@@ -1,3 +1,5 @@
+import { useAuth } from '../auth'
+
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard',        color: '#18181b' },
   { id: 'orders',    label: 'Orders',           color: '#378ADD' },
@@ -9,6 +11,7 @@ const NAV_ITEMS = [
 ]
 
 export default function Sidebar({ page, setPage }) {
+  const { admin, logout } = useAuth()
   return (
     <aside style={{
       width: '210px', backgroundColor: 'white',
@@ -48,6 +51,18 @@ export default function Sidebar({ page, setPage }) {
       </nav>
 
       <div style={{ padding: '16px 20px', borderTop: '1px solid #f0f0f0' }}>
+        {admin && (
+          <div style={{ marginBottom: '12px' }}>
+            <div style={{ fontSize: '13px', fontWeight: '700', color: '#18181b' }}>{admin.name || admin.username}</div>
+            <div style={{ fontSize: '11px', color: '#a1a1aa' }}>@{admin.username}</div>
+          </div>
+        )}
+        <button
+          onClick={logout}
+          style={{ width: '100%', padding: '8px', border: '1px solid #e4e4e7', borderRadius: '8px', backgroundColor: 'white', fontSize: '12px', fontWeight: '600', color: '#e11d48', cursor: 'pointer', marginBottom: '10px' }}
+        >
+          Keluar
+        </button>
         <a href="http://localhost:5173" style={{ fontSize: '12px', color: '#a1a1aa', textDecoration: 'none' }}>
           ← Ke Storefront
         </a>
