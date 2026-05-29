@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react'
 import StatCard from '../components/StatCard'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -32,7 +33,7 @@ export default function ImportCSV() {
     try {
       const fd = new FormData()
       fd.append('file', file)
-      const res  = await fetch(`${API}/products/import`, { method: 'POST', body: fd })
+      const res  = await authFetch(`${API}/products/import`, { method: 'POST', body: fd })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       setResult(data)

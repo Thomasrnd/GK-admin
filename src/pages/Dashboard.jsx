@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import StatCard from '../components/StatCard'
 import Badge from '../components/Badge'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -9,7 +10,7 @@ export default function Dashboard({ setPage }) {
   const [recentOrders, setRecentOrders] = useState([])
 
   useEffect(() => {
-    fetch(`${API}/orders`)
+    authFetch(`${API}/orders`)
       .then(r => r.json())
       .then(orders => {
         const today = new Date().toDateString()

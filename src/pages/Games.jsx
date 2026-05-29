@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -26,7 +27,7 @@ export default function Games() {
   useEffect(() => { fetchData() }, [])
 
   const fetchData = async () => {
-    const data = await fetch(`${API}/games`).then(r => r.json()).catch(() => ({ games: [], expansions: [] }))
+    const data = await authFetch(`${API}/games`).then(r => r.json()).catch(() => ({ games: [], expansions: [] }))
     setGames(data.games || [])
     setExpansions(data.expansions || [])
   }
@@ -38,7 +39,7 @@ export default function Games() {
     if (!newGameName.trim()) return
     setAddingGame(true); setGameError('')
     try {
-      const res = await fetch(`${API}/games`, {
+      const res = await authFetch(`${API}/games`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newGameName.trim() })
@@ -54,7 +55,7 @@ export default function Games() {
   const handleEditGame = async (id) => {
     if (!editGameName.trim()) return
     try {
-      const res = await fetch(`${API}/games/${id}`, {
+      const res = await authFetch(`${API}/games/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: editGameName.trim() })
@@ -69,7 +70,7 @@ export default function Games() {
     const expCount = expansionsForGame(id).length
     if (!confirm(`Hapus game "${name}"?\n\nIni akan menghapus SEMUA data terkait:\n• Semua expansion (${expCount} expansion)\n• Semua produk di game ini\n\nAksi ini tidak bisa dibatalkan!`)) return
     try {
-      const res = await fetch(`${API}/games/${id}`, { method: 'DELETE' })
+      const res = await authFetch(`${API}/games/${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       if (selectedGame === id) setSelectedGame(null)
@@ -83,7 +84,7 @@ export default function Games() {
     if (!newExpName.trim() || !selectedGame) return
     setAddingExp(true); setExpError('')
     try {
-      const res = await fetch(`${API}/games/${selectedGame}/expansions`, {
+      const res = await authFetch(`${API}/games/${selectedGame}/expansions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newExpName.trim(), is_newest: newExpNewest })
@@ -98,7 +99,7 @@ export default function Games() {
 
   const handleEditExp = async (id) => {
     try {
-      const res = await fetch(`${API}/games/expansions/${id}`, {
+      const res = await authFetch(`${API}/games/expansions/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: editExpName.trim(), is_newest: editExpNewest })
@@ -112,7 +113,7 @@ export default function Games() {
   const handleDeleteExp = async (id, name) => {
     if (!confirm(`Hapus expansion "${name}"?`)) return
     try {
-      const res = await fetch(`${API}/games/expansions/${id}`, { method: 'DELETE' })
+      const res = await authFetch(`${API}/games/expansions/${id}`, { method: 'DELETE' })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
       fetchData()

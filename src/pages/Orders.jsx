@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Badge from '../components/Badge'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 const STATUSES = ['pending', 'dikemas', 'dikirim', 'selesai', 'dibatalkan']
@@ -18,11 +19,11 @@ export default function Orders() {
   useEffect(() => { fetchOrders() }, [])
 
   const fetchOrders = () => {
-    fetch(`${API}/orders`).then(r => r.json()).then(setOrders).catch(() => {})
+    authFetch(`${API}/orders`).then(r => r.json()).then(setOrders).catch(() => {})
   }
 
   const fetchDetail = (id) => {
-    fetch(`${API}/orders/${id}`)
+    authFetch(`${API}/orders/${id}`)
       .then(r => r.json())
       .then(d => {
         setDetail(d)
@@ -41,7 +42,7 @@ export default function Orders() {
   const handleSave = async () => {
     setSaving(true)
     try {
-      await fetch(`${API}/orders/${selected}/status`, {
+      await authFetch(`${API}/orders/${selected}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: editStatus, tracking_number: resi || null }),

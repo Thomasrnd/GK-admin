@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -14,7 +15,7 @@ export default function Products() {
   useEffect(() => { fetchProducts() }, [])
 
   const fetchProducts = () => {
-    fetch(`${API}/products/all`).then(r => r.json()).then(setProducts).catch(() => {})
+    authFetch(`${API}/products/all`).then(r => r.json()).then(setProducts).catch(() => {})
   }
 
   const games = [...new Set(products.map(p => p.game_name))].sort()
@@ -44,7 +45,7 @@ export default function Products() {
   const handleSave = async (id) => {
     setSaving(true)
     try {
-      await fetch(`${API}/products/${id}`, {
+      await authFetch(`${API}/products/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editData),

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -13,7 +14,7 @@ export default function AddProduct() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    fetch(`${API}/products/games`)
+    authFetch(`${API}/products/games`)
       .then(r => r.json())
       .then(d => { setGames(d.games); setExpansions(d.expansions) })
       .catch(() => {})
@@ -29,7 +30,7 @@ export default function AddProduct() {
     }
     setSaving(true); setError('')
     try {
-      const res = await fetch(`${API}/products`, {
+      const res = await authFetch(`${API}/products`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import StatCard from '../components/StatCard'
+import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 
@@ -11,7 +12,7 @@ export default function Sales() {
   const [expanded, setExpanded] = useState({})
 
   useEffect(() => {
-    fetch(`${API}/orders/sales-report`)
+    authFetch(`${API}/orders/sales-report`)
       .then(r => r.json())
       .then(d => { setData(d); setLoading(false) })
       .catch(() => setLoading(false))
