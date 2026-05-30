@@ -43,7 +43,7 @@ export default function Dashboard({ setPage }) {
             : recentOrders.map(o => (
               <div key={o.id} style={rowStyle}>
                 <div>
-                  <div style={{ fontSize: '14px', fontWeight: '600' }}>#{o.id} {o.customer_name}</div>
+                  <div style={{ fontSize: '14px', fontWeight: '600' }}>{o.order_code || `#${o.id}`} · {o.customer_name}</div>
                   <div style={{ fontSize: '12px', color: '#a1a1aa' }}>Rp {Number(o.total_price).toLocaleString('id-ID')}</div>
                 </div>
                 <Badge status={o.status} />

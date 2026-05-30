@@ -90,7 +90,7 @@ export default function Orders() {
                   <tr><td colSpan={6} style={{ padding: '32px', textAlign: 'center', color: '#a1a1aa' }}>Tidak ada order</td></tr>
                 ) : filtered.map(o => (
                   <tr key={o.id} style={{ backgroundColor: selected === o.id ? '#f4f4f5' : 'white' }}>
-                    <td style={{ fontWeight: '700' }}>#{o.id}</td>
+                    <td style={{ fontWeight: '700', fontFamily: 'monospace', fontSize: '12px' }}>{o.order_code || `#${o.id}`}</td>
                     <td>
                       <div style={{ fontWeight: '600' }}>{o.customer_name}</div>
                       <div style={{ fontSize: '11px', color: '#a1a1aa' }}>{new Date(o.created_at).toLocaleDateString('id-ID')}</div>
@@ -111,7 +111,7 @@ export default function Orders() {
         <div>
           {detail ? (
             <div style={panelStyle}>
-              <div style={{ fontSize: '15px', fontWeight: '700', marginBottom: '2px' }}>Order #{detail.id}</div>
+              <div style={{ fontSize: '15px', fontWeight: '700', marginBottom: '2px', fontFamily: 'monospace' }}>{detail.order_code || `Order #${detail.id}`}</div>
               <div style={{ fontSize: '12px', color: '#a1a1aa', marginBottom: '18px' }}>{new Date(detail.created_at).toLocaleString('id-ID')}</div>
 
               <DetailSection title="Penerima">
