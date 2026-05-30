@@ -64,7 +64,7 @@ export default function Sidebar({ page, setPage }) {
         >
           Keluar
         </button>
-        <a href="http://localhost:5173" style={{ fontSize: '12px', color: '#a1a1aa', textDecoration: 'none' }}>
+        <a href={import.meta.env.VITE_STOREFRONT_URL || 'http://localhost:5173'} style={{ fontSize: '12px', color: '#a1a1aa', textDecoration: 'none' }}>
           ← Ke Storefront
         </a>
       </div>
