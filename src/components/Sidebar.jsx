@@ -21,7 +21,7 @@ export default function Sidebar({ page, setPage }) {
       position: 'sticky', top: 0,
     }}>
       <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid #f0f0f0' }}>
-        <div style={{ fontSize: '16px', fontWeight: '800', color: '#18181b' }}>TCG Admin</div>
+        <div style={{ fontSize: '16px', fontWeight: '800', color: '#18181b' }}>Gudang Kartu Admin</div>
         <div style={{ fontSize: '12px', color: '#a1a1aa', marginTop: '2px' }}>Panel pengelola toko</div>
       </div>
 

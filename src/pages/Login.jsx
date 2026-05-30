@@ -29,7 +29,7 @@ export default function Login() {
         borderRadius: '16px', padding: '32px',
       }}>
         <div style={{ marginBottom: '24px' }}>
-          <div style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px' }}>TCG Admin</div>
+          <div style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px' }}>Gudang Kartu Admin</div>
           <div style={{ fontSize: '13px', color: '#a1a1aa', marginTop: '2px' }}>Masuk untuk mengelola toko</div>
         </div>
 
