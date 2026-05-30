@@ -28,8 +28,9 @@ export default function Login() {
         width: '360px', backgroundColor: 'white', border: '1px solid #f0f0f0',
         borderRadius: '16px', padding: '32px',
       }}>
-        <div style={{ marginBottom: '24px' }}>
-          <div style={{ fontSize: '20px', fontWeight: '900', letterSpacing: '-0.5px' }}>Gudang Kartu Admin</div>
+        <div style={{ marginBottom: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+          <img src="/logo-full.png" alt="Gudang Kartu" style={{ width: '110px', height: '110px', objectFit: 'contain', marginBottom: '10px' }} />
+          <div style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '-0.5px', color: '#0a0e1a' }}>GUDANG <span style={{ color: '#b8932e' }}>KARTU</span></div>
           <div style={{ fontSize: '13px', color: '#a1a1aa', marginTop: '2px' }}>Masuk untuk mengelola toko</div>
         </div>
 
@@ -67,7 +68,7 @@ export default function Login() {
           onClick={handleSubmit}
           disabled={loading}
           style={{
-            width: '100%', padding: '11px', backgroundColor: '#18181b', color: 'white',
+            width: '100%', padding: '11px', backgroundColor: '#0a0e1a', color: 'white',
             border: 'none', borderRadius: '8px', fontSize: '14px', fontWeight: '700',
             cursor: 'pointer', opacity: loading ? 0.6 : 1,
           }}

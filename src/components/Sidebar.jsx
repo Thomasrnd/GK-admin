@@ -20,9 +20,14 @@ export default function Sidebar({ page, setPage }) {
       display: 'flex', flexDirection: 'column', minHeight: '100vh',
       position: 'sticky', top: 0,
     }}>
-      <div style={{ padding: '24px 20px 20px', borderBottom: '1px solid #f0f0f0' }}>
-        <div style={{ fontSize: '16px', fontWeight: '800', color: '#18181b' }}>Gudang Kartu Admin</div>
-        <div style={{ fontSize: '12px', color: '#a1a1aa', marginTop: '2px' }}>Panel pengelola toko</div>
+      <div style={{ padding: '20px', borderBottom: '1px solid #f0f0f0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src="/logo-full.png" alt="GK" style={{ height: '42px', width: 'auto', display: 'block', flexShrink: 0 }} />
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: '900', color: '#0a0e1a', letterSpacing: '-0.5px', lineHeight: 1.1 }}>GUDANG <span style={{ color: '#b8932e' }}>KARTU</span></div>
+            <div style={{ fontSize: '11px', color: '#a1a1aa', marginTop: '3px' }}>Panel pengelola</div>
+          </div>
+        </div>
       </div>
 
       <nav style={{ padding: '12px 0', flex: 1 }}>
