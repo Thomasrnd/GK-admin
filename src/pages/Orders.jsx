@@ -4,6 +4,14 @@ import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
 const STATUSES = ['menunggu_pembayaran', 'menunggu_konfirmasi', 'diproses', 'dikirim', 'selesai', 'dibatalkan']
+const STATUS_LABELS = {
+  menunggu_pembayaran: 'Menunggu pembayaran',
+  menunggu_konfirmasi: 'Menunggu konfirmasi',
+  diproses: 'Diproses',
+  dikirim: 'Dikirim',
+  selesai: 'Selesai',
+  dibatalkan: 'Dibatalkan',
+}
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
@@ -69,7 +77,7 @@ export default function Orders() {
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari nama customer..." />
             <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} style={{ width: '150px' }}>
               <option value="">Semua status</option>
-              {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
+              {STATUSES.map(s => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
             </select>
           </div>
 
@@ -141,13 +149,13 @@ export default function Orders() {
                 ))}
                 <div style={{ borderTop: '1px solid #f0f0f0', marginTop: '8px', paddingTop: '8px', display: 'flex', justifyContent: 'space-between', fontWeight: '700', fontSize: '13px' }}>
                   <span>Total</span>
-                  <span style={{ color: '#10b981' }}>Rp {Number(detail.total_price).toLocaleString('id-ID')}</span>
+                  <span style={{ color: '#1456b0' }}>Rp {Number(detail.total_price).toLocaleString('id-ID')}</span>
                 </div>
               </DetailSection>
 
               <DetailSection title="Update status">
                 <select value={editStatus} onChange={e => setEditStatus(e.target.value)} style={{ marginBottom: '8px' }}>
-                  {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
+                  {STATUSES.map(s => <option key={s} value={s}>{STATUS_LABELS[s]}</option>)}
                 </select>
                 <input value={resi} onChange={e => setResi(e.target.value)} placeholder="Nomor resi (opsional)" style={{ marginBottom: '12px' }} />
                 <button onClick={handleSave} disabled={saving} style={primaryBtnStyle}>
