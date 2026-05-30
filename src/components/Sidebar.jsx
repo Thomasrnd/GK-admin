@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { id: 'games',     label: 'Game & Expansion', color: '#D4537E' },
   { id: 'add',       label: 'Tambah Produk',    color: '#BA7517' },
   { id: 'import',    label: 'Import CSV',       color: '#7F77DD' },
+  { id: 'settings',  label: 'Pengaturan Rekening', color: '#3F8C8C' },
 ]
 
 export default function Sidebar({ page, setPage }) {

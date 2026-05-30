@@ -3,7 +3,7 @@ import Badge from '../components/Badge'
 import { authFetch } from '../auth'
 
 const API = import.meta.env.VITE_API_URL
-const STATUSES = ['pending', 'dikemas', 'dikirim', 'selesai', 'dibatalkan']
+const STATUSES = ['menunggu_pembayaran', 'menunggu_konfirmasi', 'diproses', 'dikirim', 'selesai', 'dibatalkan']
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
@@ -128,6 +128,10 @@ export default function Orders() {
                 {detail.tracking_number && <DetailRow label="Resi" value={detail.tracking_number} />}
               </DetailSection>
 
+              <DetailSection title="Bukti Pembayaran">
+                <PaymentProof orderId={detail.id} hasProof={!!detail.payment_proof} />
+              </DetailSection>
+
               <DetailSection title="Item pesanan">
                 {detail.items?.map(item => (
                   <DetailRow key={item.id}
@@ -177,6 +181,38 @@ function DetailRow({ label, value }) {
       <span style={{ color: '#71717a', flexShrink: 0 }}>{label}</span>
       <span style={{ fontWeight: '500', textAlign: 'right' }}>{value}</span>
     </div>
+  )
+}
+
+function PaymentProof({ orderId, hasProof }) {
+  const [imgUrl, setImgUrl] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    setImgUrl(null); setError('')
+    if (!hasProof) return
+    let revoked = false
+    setLoading(true)
+    authFetch(`${API}/orders/${orderId}/payment-proof`)
+      .then(r => { if (!r.ok) throw new Error('Gagal memuat bukti'); return r.blob() })
+      .then(blob => { if (!revoked) setImgUrl(URL.createObjectURL(blob)) })
+      .catch(() => setError('Gagal memuat bukti'))
+      .finally(() => setLoading(false))
+    return () => { revoked = true; if (imgUrl) URL.revokeObjectURL(imgUrl) }
+  }, [orderId, hasProof])
+
+  if (!hasProof) {
+    return <div style={{ fontSize: '13px', color: '#a1a1aa' }}>Belum ada bukti transfer</div>
+  }
+  if (loading) return <div style={{ fontSize: '13px', color: '#a1a1aa' }}>Memuat bukti...</div>
+  if (error) return <div style={{ fontSize: '13px', color: '#e11d48' }}>{error}</div>
+  if (!imgUrl) return null
+
+  return (
+    <a href={imgUrl} target="_blank" rel="noopener noreferrer">
+      <img src={imgUrl} alt="Bukti transfer" style={{ width: '100%', borderRadius: '8px', border: '1px solid #f0f0f0', cursor: 'zoom-in' }} />
+    </a>
   )
 }
 

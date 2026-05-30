@@ -19,7 +19,7 @@ export default function Dashboard({ setPage }) {
           totalOrders: orders.length,
           todayOrders: orders.filter(o => new Date(o.created_at).toDateString() === today).length,
           revenue: orders.filter(o => o.status === 'selesai').reduce((s, o) => s + Number(o.total_price), 0),
-          pending: orders.filter(o => o.status === 'pending').length,
+          pending: orders.filter(o => o.status === 'menunggu_konfirmasi').length,
         })
       })
       .catch(() => {})
@@ -31,7 +31,7 @@ export default function Dashboard({ setPage }) {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '32px', maxWidth: '720px' }}>
         <StatCard label="Total order"       value={stats?.totalOrders ?? '—'} sub={`+${stats?.todayOrders ?? 0} hari ini`} subColor="#10b981" />
-        <StatCard label="Pending"           value={stats?.pending ?? '—'}     sub={stats?.pending > 0 ? 'perlu diproses' : 'bersih'} subColor={stats?.pending > 0 ? '#E24B4A' : '#10b981'} />
+        <StatCard label="Perlu konfirmasi"  value={stats?.pending ?? '—'}     sub={stats?.pending > 0 ? 'bukti masuk' : 'bersih'} subColor={stats?.pending > 0 ? '#E24B4A' : '#10b981'} />
         <StatCard label="Revenue (selesai)" value={stats ? `Rp ${(stats.revenue / 1000000).toFixed(1)}jt` : '—'} />
       </div>
 

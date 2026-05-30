@@ -7,6 +7,7 @@ import Products   from './pages/Products'
 import Games      from './pages/Games'
 import AddProduct from './pages/AddProduct'
 import ImportCSV  from './pages/ImportCSV'
+import Settings   from './pages/Settings'
 import Login      from './pages/Login'
 import { useAuth } from './auth'
 
@@ -32,6 +33,7 @@ export default function App() {
     games:     <Games />,
     add:       <AddProduct />,
     import:    <ImportCSV />,
+    settings:  <Settings />,
   }
 
   return (
